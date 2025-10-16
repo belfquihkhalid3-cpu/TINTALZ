@@ -87,7 +87,7 @@ function calculatePrice() {
     
     let totalPages = config.files.reduce((sum, file) => sum + (file.pages || 1), 0);
     let basePrice = pricing[config.paperSize][config.paperWeight][config.colorMode];
-    let totalPrice = basePrice * totalPages * config.copies;
+    let totalPrice = basePrice * totalPages;
     
     // Ajouter coût de finition
     //let finishingCost = finishingCosts[config.finishing] || 0;
@@ -257,7 +257,7 @@ async function handleFiles(files) {
     // Masquer indicateur
     showUploadProgress(false);
     
-    // Mettre à jour l'interface si au moins un fichier uploadé
+    // Mettre à jour l'interface APRÈS tous les uploads
     if (successCount > 0) {
         console.log('Updated config.files:', config.files);
         
@@ -267,7 +267,7 @@ async function handleFiles(files) {
             fileList.classList.remove('hidden');
         }
         
-        // Recalculer prix et mettre à jour boutons
+        // Calculer prix UNE SEULE FOIS après tous les uploads
         calculatePrice();
         updateAddToCartButton();
         saveConfiguration();
@@ -1213,5 +1213,3 @@ function selectPagesPerSheet(type) {
     updateConfigBadges();
     saveConfiguration();
 }
-
-
