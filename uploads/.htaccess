@@ -1,0 +1,17 @@
+# Protection uploads renforcée
+Options -ExecCGI -Indexes
+AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi .exe
+
+# Bloquer tous les scripts
+<FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|jsp|asp|sh|cgi)$">
+    Deny from all
+</FilesMatch>
+
+# Autoriser seulement les documents
+<FilesMatch "\.(pdf)$">
+    Allow from all
+</FilesMatch>
+
+# Headers sécurité
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
